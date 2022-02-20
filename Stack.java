@@ -1,82 +1,83 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class Stack {
+    int top = -1;
     int size;
-    int top;
-    int[] array;
-    Stack(int size,int top){
+    int[] mystack;
+
+    Stack(int size) {
         this.size = size;
-        this.top = top;
-        this.array = new int[size];
+        this.mystack = new int[this.size];
     }
 
-    public void push(int element){
-        if(top == size-1){
+    private void push(int item) {
+        if (this.top == this.size-1) {
             System.out.println("Stack Overflow");
-        }
-        else{
-            array[++top] = element;
-        }
-    }
-
-    public int pop(){
-        if(top == -1){
-
-            return -1;
-        }
-        else{
-            return array[top--];
+        } else {
+            this.mystack[++this.top] = item;
         }
     }
 
-    public void display(){
-        if(top == -1){
+    private int pop() {
+        if (this.top == -1) {
             System.out.println("Stack Underflow");
-        }
-        else{
-            System.out.print("The elements of the array are:  ");
-            for(int i=top;i>=0;i--)
-                System.out.print(array[i]+"  ");
+            return 0;
+        } else {
+            return this.mystack[this.top--];
         }
     }
-    public static void main(String[] args){
 
-        System.out.println("Enter the size of the stack:   ");
-        int size;
+    private void display() {
+        if (this.top == -1) {
+            System.out.println("Stack Empty. Cannot Display");
+        } else {
+            System.out.println("Stack Elements -");
+            for (int i = 0; i <= this.top; i++) {
+                System.out.print(this.mystack[i] + " ");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        size = sc.nextInt();
-        Stack s1 = new Stack(size,-1);
-
-        while(true){
-            System.out.print("\n1. Push an element into the stack\n2.Pop an element from the stack\n3.Display the elements of the stack\n4.Exit\n");
+        int n;
+        System.out.println("Enter Stack size -");
+        n = sc.nextInt();
+        Stack stack = new Stack(n);
+        while (true)
+        {
+            System.out.println("Press\n1.To Push\n2.To Pop\n3. To Display\n4.To Exit\nEnter -");
             int choice;
-            System.out.println("Enter your choice:    ");
             choice = sc.nextInt();
-
-            switch(choice){
+            switch(choice)
+            {
                 case 1:
-                    System.out.println("Enter the element you want to push into the stack");
-                    int element1;
-                    element1 = sc.nextInt();
-                    s1.push(element1);
-                    break;
-
-                case 2:
-                    int element2 = s1.pop();
-                    if(element2 != -1){
-                        System.out.println("The element popped out from the stack is:  "+element2);
+                    System.out.println("Enter -");
+                    n = sc.nextInt();
+                    if (n == 0)
+                    {
+                        System.out.println("0 not allowed");
                     }
-                    else{
-                        System.out.println("Stack Underflow");
+                    else
+                    {
+                        stack.push(n);
+                    }
+                    break;
+                case 2:
+                    n = stack.pop();
+                    if (n != 0)
+                    {
+                        System.out.println("Item Popped = "+n);
                     }
                     break;
                 case 3:
-                    s1.display();
+                    stack.display();
                     break;
                 case 4:
+                    sc.close();
                     System.exit(0);
                 default:
-                    System.out.println("Invalid choice");
+                    System.out.println("Invalid Choice");
             }
         }
     }
